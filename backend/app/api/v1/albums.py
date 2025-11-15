@@ -1,3 +1,7 @@
-# Albums endpoints
-# Routes: GET /api/v1/albums, POST /api/v1/albums, GET /api/v1/albums/{id}, PUT /api/v1/albums/{id}, DELETE /api/v1/albums/{id}
+"""Albums endpoints."""
+
+from fastapi import APIRouter
+
+router = APIRouter(prefix="/albums", tags=["albums"])
+
 # TODO: Implement album CRUD operations and media association

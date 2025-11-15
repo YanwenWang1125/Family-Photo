@@ -1,3 +1,7 @@
-# Search endpoints
-# Routes: POST /api/v1/search, GET /api/v1/search/suggestions
+"""Search endpoints."""
+
+from fastapi import APIRouter
+
+router = APIRouter(prefix="/search", tags=["search"])
+
 # TODO: Implement conversational AI search and query suggestions
