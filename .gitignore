@@ -1,5 +1,6 @@
 # Cursor IDE
 .cursor/
+.claude/
 
 # Python
 __pycache__/
