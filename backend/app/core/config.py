@@ -1,16 +1,24 @@
 """Application configuration using Pydantic Settings."""
 
+from pathlib import Path
 from typing import Optional
 
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+# Get the backend directory (parent of app directory)
+BACKEND_DIR = Path(__file__).parent.parent.parent
+ENV_FILE = BACKEND_DIR / ".env"
+
 
 class Settings(BaseSettings):
-    """Application settings loaded from environment variables."""
+    """Application settings loaded from environment variables.
+
+    Loads from backend/.env file or environment variables.
+    """
 
     model_config = SettingsConfigDict(
-        env_file=".env",
+        env_file=str(ENV_FILE) if ENV_FILE.exists() else None,
         env_file_encoding="utf-8",
         case_sensitive=False,
         extra="ignore",
@@ -100,6 +108,10 @@ class Settings(BaseSettings):
     LOG_LEVEL: str = Field(
         default="INFO",
         description="Logging level",
+    )
+    DEBUG: bool = Field(
+        default=False,
+        description="Debug mode (enables SQL query logging)",
     )
 
 

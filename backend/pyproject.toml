@@ -23,6 +23,8 @@ dependencies = [
     "passlib[argon2]==1.7.*",
     "python-multipart==0.0.*",
     "apscheduler==3.10.*",
+    "asyncpg==0.29.*",
+    "pgvector==0.3.*",
 ]
 
 [project.optional-dependencies]

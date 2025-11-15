@@ -1,18 +1,20 @@
 # Docker Compose for local development
-version: '3.8'
+version: "3.9"
 
 services:
   # PostgreSQL database
   postgres:
-    image: postgres:14
+    image: postgres:15
+    container_name: familyhub-postgres
+    restart: always
     environment:
-      POSTGRES_DB: family_photo
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: familyhubdb
     ports:
       - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - pgdata:/var/lib/postgresql/data
 
   # Backend API
   backend:
@@ -22,7 +24,7 @@ services:
     ports:
       - "8000:8000"
     environment:
-      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/family_photo
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/familyhubdb
       JWT_SECRET: dev-secret-key
       OPENAI_API_KEY: ${OPENAI_API_KEY}
       AZURE_BLOB_CONNECTION_STRING: ${AZURE_BLOB_CONNECTION_STRING}
@@ -47,4 +49,4 @@ services:
     command: npm run dev
 
 volumes:
-  postgres_data:
+  pgdata:

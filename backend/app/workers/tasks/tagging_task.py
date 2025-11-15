@@ -12,7 +12,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.config import settings
 from app.core.logging import get_logger
 from app.db.models.media import Media
-from app.db.models.tag import Tag
+from app.db.models.tag import Tag, TagSource
 from app.db.session import AsyncSessionLocal
 from app.services.ai_service import process_media_tagging
 from app.utils.azure_blob import download_blob, generate_sas_url
@@ -155,7 +155,7 @@ async def process_single_media(
                 select(Tag).where(
                     Tag.media_id == media.id,
                     Tag.tag_name == tag_name,
-                    Tag.source == "ai",
+                    Tag.source == TagSource.AI,
                 )
             )
             if existing_tag.scalar_one_or_none():
@@ -165,7 +165,7 @@ async def process_single_media(
             tag = Tag(
                 media_id=media.id,
                 tag_name=tag_name.strip(),
-                source="ai",
+                source=TagSource.AI,
                 confidence=None,  # OpenAI Vision doesn't provide confidence scores
             )
             db.add(tag)
